@@ -28,13 +28,31 @@ public abstract class AbstractCalculation<T extends Calculation<?>> implements C
 	public Set<String> getVariables() {
 		return new TreeSet<String>(variables);
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	public T round(int scale, RoundingMode rounding) {
+		operations.add(new Round(new Value(scale), rounding));
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public T round(String variable, RoundingMode rounding) {
+		operations.add(new Round(new VariableReplace(variable), rounding));
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public T round(Calculation<?> calculation, RoundingMode rounding) {
+		operations.add(new Round(calculation, rounding));
+		return (T) this;
+	}
+
 	public BigDecimal calculate(Collection<VarDef> vars) {
-		return calculate(vars != null ? (VarDef[])vars.toArray() : EMPTY_VARS);
+		return calculate(vars != null ? (VarDef[]) vars.toArray() : EMPTY_VARS);
 	}
 
 	public BigDecimal calculate(int scale, RoundingMode roundingMode, Collection<VarDef> vars) {
-		return calculate(scale, roundingMode, vars != null ? (VarDef[])vars.toArray() : EMPTY_VARS);
+		return calculate(scale, roundingMode, vars != null ? (VarDef[]) vars.toArray() : EMPTY_VARS);
 	}
 
 	public BigDecimal calculate(int scale, RoundingMode roundingMode, VarDef... vars) {
