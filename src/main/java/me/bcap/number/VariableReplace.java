@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import me.bcap.number.intf.VarDef;
 
-class VariableReplace extends AbstractCalculation {
+class VariableReplace extends AbstractCalculation<VariableReplace> {
 
 	private static final long serialVersionUID = 1L;
 

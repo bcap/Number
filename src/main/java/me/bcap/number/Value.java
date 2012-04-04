@@ -3,8 +3,9 @@ package me.bcap.number;
 import java.math.BigDecimal;
 
 import me.bcap.number.intf.VarDef;
+import me.bcap.number.tool.NumberTool;
 
-class Value extends AbstractCalculation {
+class Value extends AbstractCalculation<Value> {
 
 	private static final long serialVersionUID = 1L;
 
