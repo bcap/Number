@@ -10,6 +10,8 @@ import java.util.TreeSet;
 
 import me.bcap.number.intf.Calculation;
 import me.bcap.number.intf.VarDef;
+import me.bcap.number.operation.Operation;
+import me.bcap.number.operation.Round;
 
 public abstract class AbstractCalculation<T extends Calculation<?>> implements Calculation<T> {
 
@@ -19,7 +21,7 @@ public abstract class AbstractCalculation<T extends Calculation<?>> implements C
 
 	private Set<String> variables = new TreeSet<String>();
 
-	protected List<Execution> executions = new ArrayList<Execution>();
+	protected List<Operation> operations = new ArrayList<Operation>();
 
 	protected void addVar(String variable) {
 		variables.add(variable);
