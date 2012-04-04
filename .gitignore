@@ -1,0 +1,12 @@
+# eclipse stuff
+.classpath
+.settings
+.project
+.externalToolBuilders/
+bin/
+
+# maven stuff
+target/
+
+# other stuff
+
