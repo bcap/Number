@@ -1,4 +1,4 @@
-package me.bcap.number;
+package me.bcap.number.tool;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
