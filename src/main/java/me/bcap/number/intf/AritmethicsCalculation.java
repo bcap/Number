@@ -1,5 +1,7 @@
 package me.bcap.number.intf;
 
+import java.math.RoundingMode;
+
 public interface AritmethicsCalculation<T extends Calculation<?>> extends Calculation<T> {
 
 	public T plus(Calculation<?> calculation);
@@ -25,6 +27,12 @@ public interface AritmethicsCalculation<T extends Calculation<?>> extends Calcul
 	public T dividedBy(Number number);
 
 	public T dividedBy(String variable);
+	
+	public T dividedBy(Calculation<?> calculation, int scale, RoundingMode rounding);
+
+	public T dividedBy(Number number, int scale, RoundingMode rounding);
+
+	public T dividedBy(String variable, int scale, RoundingMode rounding);
 	
 //	public T poweredBy(Calculation<?> calculation);
 //

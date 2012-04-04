@@ -10,6 +10,12 @@ public interface Calculation<T extends Calculation<?>> extends Serializable {
 
 	public Set<String> getVariables();
 	
+	public T round(int scale, RoundingMode rounding);
+	
+	public T round(String variable, RoundingMode rounding);
+	
+	public T round(Calculation<?> calculation, RoundingMode rounding);
+	
 	public BigDecimal calculate(VarDef... vars);
 
 	public BigDecimal calculate(int scale, RoundingMode roundingMode, VarDef... vars);
