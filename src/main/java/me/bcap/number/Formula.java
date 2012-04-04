@@ -1,110 +1,136 @@
 package me.bcap.number;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import me.bcap.number.intf.AritmethicsCalculation;
 import me.bcap.number.intf.Calculation;
 import me.bcap.number.intf.VarDef;
+import me.bcap.number.operation.Addition;
+import me.bcap.number.operation.Division;
+import me.bcap.number.operation.Multiplication;
+import me.bcap.number.operation.Operation;
+import me.bcap.number.operation.Substraction;
 
 public class Formula extends AbstractCalculation<Formula> implements AritmethicsCalculation<Formula> {
 
 	private static final long serialVersionUID = 1L;
 
-	private Calculation<?> value;
+	private static final int DEFAULT_SCALE = 100;
+
+	private static final RoundingMode DEFAULT_DIVISION_ROUNDING = RoundingMode.HALF_EVEN;
+
+	private Calculation<?> calculation;
+
+	private int scale = DEFAULT_SCALE;
+
+	private RoundingMode divisionRounding = DEFAULT_DIVISION_ROUNDING;
 
 	public Formula() {
-		this.value = new Value(BigDecimal.ZERO);
+		this.calculation = new Value(BigDecimal.ZERO);
 	}
 
 	public Formula(String var) {
-		this.value = new VariableReplace(var);
+		this.calculation = new VariableReplace(var);
 	}
-	
+
 	public Formula(Number value) {
-		this.value = new Value(value);
+		this.calculation = new Value(value);
 	}
 
 	public Formula(Calculation<?> calculation) {
-		this.value = calculation;
+		this.calculation = calculation;
+	}
+
+	public Formula withDivisionRounding(RoundingMode rounding) {
+		this.divisionRounding = rounding;
+		return this;
+	}
+	
+	public Formula withScale(int scale) {
+		this.scale = scale;
+		return this;
 	}
 
 	public BigDecimal calculate(VarDef... vars) {
-		BigDecimal number = value.calculate(vars);
+		BigDecimal number = calculation.calculate(vars);
 
-		for (Execution execution : executions) {
-			Operation operation = execution.operation;
-			BigDecimal value = execution.value.calculate(vars);
+		for (Operation operation : operations)
+			number = operation.execute(number, vars);
 
-			if (operation == Operation.ADDITION)
-				number = number.add(value);
-			else if (operation == Operation.SUBSTRACTION)
-				number = number.subtract(value);
-			else if (operation == Operation.MULTIPLICATION)
-				number = number.multiply(value);
-			else if (operation == Operation.DIVISION)
-				number = number.divide(value);
-		}
-
-		return number;
+		return number.stripTrailingZeros();
 	}
 
 	public Formula plus(Calculation<?> calculation) {
-		executions.add(new Execution(Operation.ADDITION, calculation));
+		operations.add(new Addition(calculation));
 		return this;
 	}
 
 	public Formula plus(Number number) {
-		executions.add(new Execution(Operation.ADDITION, new Value(number)));
+		operations.add(new Addition(new Value(number)));
 		return this;
 	}
 
 	public Formula plus(String variable) {
-		executions.add(new Execution(Operation.ADDITION, new VariableReplace(variable)));
+		operations.add(new Addition(new VariableReplace(variable)));
 		return this;
 	}
 
 	public Formula minus(Calculation<?> calculation) {
-		executions.add(new Execution(Operation.SUBSTRACTION, calculation));
+		operations.add(new Substraction(calculation));
 		return this;
 	}
 
 	public Formula minus(Number number) {
-		executions.add(new Execution(Operation.SUBSTRACTION, new Value(number)));
+		operations.add(new Substraction(new Value(number)));
 		return this;
 	}
 
 	public Formula minus(String variable) {
-		executions.add(new Execution(Operation.SUBSTRACTION, new VariableReplace(variable)));
+		operations.add(new Substraction(new VariableReplace(variable)));
 		return this;
 	}
 
 	public Formula times(Calculation<?> calculation) {
-		executions.add(new Execution(Operation.MULTIPLICATION, calculation));
+		operations.add(new Multiplication(calculation));
 		return this;
 	}
 
 	public Formula times(Number number) {
-		executions.add(new Execution(Operation.MULTIPLICATION, new Value(number)));
+		operations.add(new Multiplication(new Value(number)));
 		return this;
 	}
 
 	public Formula times(String variable) {
-		executions.add(new Execution(Operation.MULTIPLICATION, new VariableReplace(variable)));
+		operations.add(new Multiplication(new VariableReplace(variable)));
 		return this;
 	}
 
 	public Formula dividedBy(Calculation<?> calculation) {
-		executions.add(new Execution(Operation.DIVISION, calculation));
-		return this;
+		return dividedBy(calculation, scale, divisionRounding);
 	}
 
 	public Formula dividedBy(Number number) {
-		executions.add(new Execution(Operation.DIVISION, new Value(number)));
-		return this;
+		return dividedBy(number, scale, divisionRounding);
 	}
 
 	public Formula dividedBy(String variable) {
-		executions.add(new Execution(Operation.DIVISION, new VariableReplace(variable)));
+		return dividedBy(variable, scale, divisionRounding);
+	}
+
+	public Formula dividedBy(Calculation<?> calculation, int scale, RoundingMode rounding) {
+		operations.add(new Division(calculation, scale, divisionRounding));
 		return this;
 	}
+
+	public Formula dividedBy(Number number, int scale, RoundingMode rounding) {
+		operations.add(new Division(new Value(number), scale, divisionRounding));
+		return this;
+	}
+
+	public Formula dividedBy(String variable, int scale, RoundingMode rounding) {
+		operations.add(new Division(new VariableReplace(variable), scale, divisionRounding));
+		return this;
+	}
+
 }
