@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class FormulaTest {
+public class SimpleFormulaTest {
 
 	@Test
 	public void testSimpleAddition() {
@@ -73,8 +73,9 @@ public class FormulaTest {
 	@Test
 	public void testVarChainedCalculation() {
 		Formula formula = ((new Formula("a").plus("b")).times(new Formula("c").minus("d"))).dividedBy("e");
+
 		Var[] vars = new Var[] { 
-			new Var("a", 5), 
+			new Var("a", 5),
 			new Var("b", 2),
 			new Var("c", 12),
 			new Var("d", 2),
