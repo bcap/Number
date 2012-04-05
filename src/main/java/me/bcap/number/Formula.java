@@ -58,7 +58,14 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 		for (Operation operation : operations)
 			number = operation.execute(number, vars);
 
-		return number.stripTrailingZeros();
+		return cleanScale(number);
+	}
+
+	private BigDecimal cleanScale(BigDecimal number) {
+		number = number.stripTrailingZeros();
+		if(number.scale() < 0)
+			number = number.setScale(0);
+		return number;
 	}
 
 	public Formula plus(Calculation<?> calculation) {
