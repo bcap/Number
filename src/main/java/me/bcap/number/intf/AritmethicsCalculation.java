@@ -34,16 +34,16 @@ public interface AritmethicsCalculation<T extends Calculation<?>> extends Calcul
 
 	public T dividedBy(String variable, int scale, RoundingMode rounding);
 	
-//	public T poweredBy(Calculation<?> calculation);
-//
-//	public T poweredBy(Number number);
-//
-//	public T poweredBy(String variable);
-//	
-//	public T root(Calculation<?> calculation);
-//
-//	public T root(Number number);
-//
-//	public T root(String variable);
+	public T poweredBy(Calculation<?> calculation);
+
+	public T poweredBy(Number number);
+
+	public T poweredBy(String variable);
+	
+	public T root(Calculation<?> calculation);
+
+	public T root(Number number);
+
+	public T root(String variable);
 
 }

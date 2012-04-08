@@ -140,4 +140,34 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 		return this;
 	}
 
+	public Formula poweredBy(Calculation<?> calculation) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Formula poweredBy(Number number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Formula poweredBy(String variable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Formula root(Calculation<?> calculation) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Formula root(Number number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Formula root(String variable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
