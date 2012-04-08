@@ -45,5 +45,4 @@ public class NumberTool {
 		return toClosestBigInteger(number).longValue();
 	}
 	
-	
 }
