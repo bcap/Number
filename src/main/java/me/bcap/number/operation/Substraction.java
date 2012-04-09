@@ -7,6 +7,8 @@ import me.bcap.number.intf.VarDef;
 
 public class Substraction extends SimpleOperation {
 
+	private static final long serialVersionUID = 1L;
+
 	public Substraction(Calculation<?> value) {
 		super(value);
 	}

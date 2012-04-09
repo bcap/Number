@@ -7,6 +7,8 @@ import me.bcap.number.intf.VarDef;
 
 public class Multiplication extends SimpleOperation {
 
+	private static final long serialVersionUID = 1L;
+
 	public Multiplication(Calculation<?> calculation) {
 		super(calculation);
 	}

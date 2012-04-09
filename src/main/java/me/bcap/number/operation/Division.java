@@ -8,6 +8,8 @@ import me.bcap.number.intf.VarDef;
 
 public class Division extends SimpleOperation {
 
+	private static final long serialVersionUID = 1L;
+
 	private final int scale;
 	private final RoundingMode rounding;
 

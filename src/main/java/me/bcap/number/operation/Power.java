@@ -7,6 +7,8 @@ import me.bcap.number.intf.VarDef;
 
 public class Power extends SimpleOperation {
 
+	private static final long serialVersionUID = 1L;
+
 	public Power(Calculation<?> calculation) {
 		super(calculation);
 	}

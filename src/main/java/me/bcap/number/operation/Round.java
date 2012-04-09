@@ -8,6 +8,8 @@ import me.bcap.number.intf.VarDef;
 
 public class Round implements Operation {
 
+	private static final long serialVersionUID = 1L;
+
 	Calculation<?> scale;
 	RoundingMode rounding;
 
