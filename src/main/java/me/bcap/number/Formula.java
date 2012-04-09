@@ -75,6 +75,7 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 	
 	public Formula(String var, int scale, RoundingMode divisionRounding) {
 		this.calculation = new VariableReplace(var);
+		addVar(var);
 		initScaleAndRounding(scale, divisionRounding);
 	}
 
@@ -141,6 +142,7 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 
 	public Formula plus(String variable) {
 		operations.add(new Addition(new VariableReplace(variable)));
+		addVar(variable);
 		return this;
 	}
 
@@ -156,6 +158,7 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 
 	public Formula minus(String variable) {
 		operations.add(new Substraction(new VariableReplace(variable)));
+		addVar(variable);
 		return this;
 	}
 
@@ -171,6 +174,7 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 
 	public Formula times(String variable) {
 		operations.add(new Multiplication(new VariableReplace(variable)));
+		addVar(variable);
 		return this;
 	}
 
@@ -198,6 +202,7 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 
 	public Formula dividedBy(String variable, int scale, RoundingMode rounding) {
 		operations.add(new Division(new VariableReplace(variable), scale, divisionRounding));
+		addVar(variable);
 		return this;
 	}
 
@@ -213,6 +218,7 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 
 	public Formula poweredBy(String variable) {
 		operations.add(new Power(new VariableReplace(variable)));
+		addVar(variable);
 		return this;
 	}
 }
