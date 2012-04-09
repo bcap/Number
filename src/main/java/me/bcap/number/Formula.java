@@ -1,6 +1,7 @@
 package me.bcap.number;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 import me.bcap.number.intf.AritmethicsCalculation;
@@ -15,18 +16,34 @@ import me.bcap.number.operation.Substraction;
 
 public class Formula extends AbstractCalculation<Formula> implements AritmethicsCalculation<Formula> {
 
+	// statics 
 	private static final long serialVersionUID = 1L;
 
-	private static final int DEFAULT_SCALE = 100;
+	public static final int DECIMAL128_SCALE = MathContext.DECIMAL128.getPrecision();
+	
+	public static final int DECIMAL64_SCALE = MathContext.DECIMAL64.getPrecision();
+	
+	public static final int DECIMAL32_SCALE = MathContext.DECIMAL32.getPrecision();
+	
+	private static int DEFAULT_SCALE = DECIMAL128_SCALE;
 
 	private static final RoundingMode DEFAULT_DIVISION_ROUNDING = RoundingMode.HALF_EVEN;
 
+	public static int getDefaultScaleForNewFormulas() {
+		return DEFAULT_SCALE;
+	}
+	
+	public static void setDefaultScaleForNewFormulas(int scale) {
+		DEFAULT_SCALE = scale;
+	}
+	
+	// normals 
 	private Calculation<?> calculation;
 
 	private int scale = DEFAULT_SCALE;
 
 	private RoundingMode divisionRounding = DEFAULT_DIVISION_ROUNDING;
-
+	
 	public Formula() {
 		this.calculation = new Value(BigDecimal.ZERO);
 	}

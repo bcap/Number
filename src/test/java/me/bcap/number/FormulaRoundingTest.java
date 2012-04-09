@@ -21,6 +21,50 @@ public class FormulaRoundingTest {
 	}
 	
 	@Test
+	public void testDefaultRoundingAndScale() {
+		StringBuilder result = new StringBuilder("6.");
+		for(int i = 0; i < 34; i++)
+			result.append("6");
+		result.replace(result.length() - 1, result.length(), "7");
+		
+		// 20 divided by 3 should result in 6.6666...6667 (34 fractional digits)
+ 		assertThat(new Formula(20).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
+	}
+	
+	@Test
+	public void testDecimal128RoundingAndScale() {
+		StringBuilder result = new StringBuilder("6.");
+		for(int i = 0; i < 34; i++)
+			result.append("6");
+		result.replace(result.length() - 1, result.length(), "7");
+		
+		// 20 divided by 3 should result in 6.6666...6667 (34 fractional digits)
+ 		assertThat(new Formula(20).withScale(Formula.DECIMAL128_SCALE).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
+	}
+	
+	@Test
+	public void testDecimal64RoundingAndScale() {
+		StringBuilder result = new StringBuilder("6.");
+		for(int i = 0; i < 16; i++)
+			result.append("6");
+		result.replace(result.length() - 1, result.length(), "7");
+		
+		// 20 divided by 3 should result in 6.6666...6667 (34 fractional digits)
+ 		assertThat(new Formula(20).withScale(Formula.DECIMAL64_SCALE).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
+	}
+	
+	@Test
+	public void testDecimal32RoundingAndScale() {
+		StringBuilder result = new StringBuilder("6.");
+		for(int i = 0; i < 7; i++)
+			result.append("6");
+		result.replace(result.length() - 1, result.length(), "7");
+		
+		// 20 divided by 3 should result in 6.6666...6667 (34 fractional digits)
+ 		assertThat(new Formula(20).withScale(Formula.DECIMAL32_SCALE).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
+	}
+	
+	@Test
 	public void testResultRoundingHalfEven() {
 		RoundingMode rounding = RoundingMode.HALF_EVEN;
 		//positives
