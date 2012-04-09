@@ -20,6 +20,7 @@ public class VariablesFormulaTest {
 			new Var("z", 10)
 		};
 		assertThat(formula.calculate(vars), is(new BigDecimal("7.5")));
+		assertFormulaContainVars(formula, "x", "y", "z");
 	}
 
 	@Test
@@ -33,6 +34,15 @@ public class VariablesFormulaTest {
 			new Var("b", 5)
 		};
 		assertThat(formula.calculate(vars), is(new BigDecimal("7.5")));
+		assertFormulaContainVars(formula, "x", "y", "z", "a", "b");
+	}
+	
+
+	@Test
+	public void testVarUsedMoreThanOnce() {
+		Formula formula = (new Formula("x").plus("x")).times("x");
+		assertThat(formula.calculate(new Var("x", 3)), is(new BigDecimal("18")));
+		assertFormulaContainVars(formula, "x");
 	}
 
 	@Test
@@ -91,13 +101,33 @@ public class VariablesFormulaTest {
 			}},
 		};
 		
-		for (Expectation expectation : expectations) 
+		for (Expectation expectation : expectations) {
 			assertThat(formula.calculate(expectation.vars), is(equalTo(new BigDecimal(expectation.result))));
+			assertFormulaContainVars(formula, "a", "b", "c");
+		}
 	}
 	
 	@Test
 	public void testVarNotDefined() {
-		Formula formula = new Formula("a").plus(5);
-
+		Formula formula = new Formula("someVariableName").plus(5);
+		try { 
+			formula.calculate();
+			fail("should launch an ArithmeticException as the variable 'a' is not defined");
+		} catch (ArithmeticException e) {
+			assertThat(e.getMessage(), is(notNullValue()));
+			assertThat("Exception message should contains an indication to the undefined variable", e.getMessage().contains(" someVariableName "), is(true));
+		}
+	}
+	
+	@Test
+	public void testUnusedVarDefined() {
+		Formula formula = new Formula("someVariableName").plus(5);
+		assertThat(formula.calculate(new Var("someVariableName", 3), new Var("anUnusedVariable", 7)), is(new BigDecimal(8)));
+	}
+	
+	private void assertFormulaContainVars(Formula formula, String... vars) {
+		assertThat("formula contains a different amount of variables", formula.getVariables().size(), is(vars.length));
+		for (String var : vars)
+			assertThat("var " + var + " is not present in the formula", formula.getVariables().contains(var), is(true));
 	}
 }
