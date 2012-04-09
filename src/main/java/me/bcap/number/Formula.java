@@ -155,20 +155,4 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 		operations.add(new Power(new VariableReplace(variable)));
 		return this;
 	}
-
-	public Formula root(Calculation<?> calculation) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Formula root(Number number) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Formula root(String variable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
