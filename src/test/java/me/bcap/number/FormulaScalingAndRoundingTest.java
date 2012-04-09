@@ -39,7 +39,7 @@ public class FormulaScalingAndRoundingTest {
 		result.replace(result.length() - 1, result.length(), "7");
 		
 		// 20 divided by 3 should result in 6.6666...6667 (34 fractional digits)
- 		assertThat(new Formula(20).withScale(Formula.DECIMAL128_SCALE).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
+ 		assertThat(new Formula(20, Formula.DECIMAL128_SCALE, Formula.DEFAULT_DIVISION_ROUNDING).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class FormulaScalingAndRoundingTest {
 		result.replace(result.length() - 1, result.length(), "7");
 		
 		// 20 divided by 3 should result in 6.6666...6667 (34 fractional digits)
- 		assertThat(new Formula(20).withScale(Formula.DECIMAL64_SCALE).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
+ 		assertThat(new Formula(20, Formula.DECIMAL64_SCALE, Formula.DEFAULT_DIVISION_ROUNDING).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
 	}
 	
 	@Test
@@ -61,7 +61,7 @@ public class FormulaScalingAndRoundingTest {
 		result.replace(result.length() - 1, result.length(), "7");
 		
 		// 20 divided by 3 should result in 6.6666...6667 (34 fractional digits)
- 		assertThat(new Formula(20).withScale(Formula.DECIMAL32_SCALE).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
+ 		assertThat(new Formula(20, Formula.DECIMAL32_SCALE, Formula.DEFAULT_DIVISION_ROUNDING).dividedBy(3).calculate(), is(new BigDecimal(result.toString())));
 	}
 	
 	@Test
