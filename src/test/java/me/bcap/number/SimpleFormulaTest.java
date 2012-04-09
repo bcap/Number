@@ -48,6 +48,12 @@ public class SimpleFormulaTest {
 	}
 	
 	@Test
+	public void testZeroSquareRoot() {
+		Formula formula = new Formula(0).squareRoot();
+		assertThat(formula.calculate(), is(new BigDecimal("0")));
+	}
+	
+	@Test
 	public void testLowPrecisionSquareRoot() {
 		Formula formula = new Formula(2).withScale(10).squareRoot();
 		assertThat(formula.calculate(), is(new BigDecimal("1.4142135624")));
