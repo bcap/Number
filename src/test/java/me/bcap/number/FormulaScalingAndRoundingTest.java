@@ -1,7 +1,7 @@
 package me.bcap.number;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
