@@ -11,7 +11,7 @@ import me.bcap.number.intf.VarDef;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FormulaRoundingTest {
+public class FormulaScalingAndRoundingTest {
 
 	private Formula divisionFormula;
 	
