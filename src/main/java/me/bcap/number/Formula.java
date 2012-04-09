@@ -10,6 +10,7 @@ import me.bcap.number.operation.Addition;
 import me.bcap.number.operation.Division;
 import me.bcap.number.operation.Multiplication;
 import me.bcap.number.operation.Operation;
+import me.bcap.number.operation.Power;
 import me.bcap.number.operation.Substraction;
 
 public class Formula extends AbstractCalculation<Formula> implements AritmethicsCalculation<Formula> {
@@ -141,18 +142,18 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 	}
 
 	public Formula poweredBy(Calculation<?> calculation) {
-		// TODO Auto-generated method stub
-		return null;
+		operations.add(new Power(calculation));
+		return this;
 	}
 
 	public Formula poweredBy(Number number) {
-		// TODO Auto-generated method stub
-		return null;
+		operations.add(new Power(new Value(number)));
+		return this;
 	}
 
 	public Formula poweredBy(String variable) {
-		// TODO Auto-generated method stub
-		return null;
+		operations.add(new Power(new VariableReplace(variable)));
+		return this;
 	}
 
 	public Formula root(Calculation<?> calculation) {
