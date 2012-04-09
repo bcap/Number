@@ -12,6 +12,7 @@ import me.bcap.number.operation.Division;
 import me.bcap.number.operation.Multiplication;
 import me.bcap.number.operation.Operation;
 import me.bcap.number.operation.Power;
+import me.bcap.number.operation.SquareRoot;
 import me.bcap.number.operation.Substraction;
 
 public class Formula extends AbstractCalculation<Formula> implements AritmethicsCalculation<Formula> {
@@ -219,6 +220,11 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 	public Formula poweredBy(String variable) {
 		operations.add(new Power(new VariableReplace(variable)));
 		addVar(variable);
+		return this;
+	}
+
+	public Formula squareRoot() {
+		operations.add(new SquareRoot(scale));
 		return this;
 	}
 }

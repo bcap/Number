@@ -42,6 +42,24 @@ public class SimpleFormulaTest {
 	}
 	
 	@Test
+	public void testSimpleSquareRoot() {
+		Formula formula = new Formula(25).squareRoot();
+		assertThat(formula.calculate(), is(new BigDecimal("5")));
+	}
+	
+	@Test
+	public void testLowPrecisionSquareRoot() {
+		Formula formula = new Formula(2).withScale(10).squareRoot();
+		assertThat(formula.calculate(), is(new BigDecimal("1.4142135624")));
+	}
+	
+	@Test
+	public void testHighPrecisionSquareRoot() {
+		Formula formula = new Formula(2).withScale(80).squareRoot();
+		assertThat(formula.calculate(), is(new BigDecimal("1.41421356237309504880168872420969807856967187537694807317667973799073247846210704")));
+	}
+
+	@Test
 	public void testPowerFailOnNonInteger() {
 		Formula formula = new Formula(5).poweredBy(3.1);
 		try {

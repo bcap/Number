@@ -38,6 +38,6 @@ public interface AritmethicsCalculation<T extends Calculation<?>> extends Calcul
 
 	public T poweredBy(Number number);
 
-	public T poweredBy(String variable);
+	public T squareRoot();
 
 }
