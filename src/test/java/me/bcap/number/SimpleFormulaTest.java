@@ -34,6 +34,24 @@ public class SimpleFormulaTest {
 		Formula formula = new Formula(5).dividedBy(2);
 		assertThat(formula.calculate(), is(new BigDecimal("2.5")));
 	}
+	
+	@Test
+	public void testSimplePower() {
+		Formula formula = new Formula(5).poweredBy(3);
+		assertThat(formula.calculate(), is(new BigDecimal("125")));
+	}
+	
+	@Test
+	public void testPowerFailOnNonInteger() {
+		Formula formula = new Formula(5).poweredBy(3.1);
+		try {
+			formula.calculate();
+			fail("Power should fail as a non integer was passed as argument");
+		} catch (ArithmeticException e) {
+			assertThat(e.getMessage(), is(notNullValue()));
+			assertThat(e.getMessage().contains("3.1"), is(true));
+		}
+	}
 
 	@Test
 	public void testSimpleChainedCalculation() {
