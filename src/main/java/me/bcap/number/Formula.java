@@ -18,16 +18,16 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 
 	// statics 
 	private static final long serialVersionUID = 1L;
-
+	
 	public static final int DECIMAL128_SCALE = MathContext.DECIMAL128.getPrecision();
 	
 	public static final int DECIMAL64_SCALE = MathContext.DECIMAL64.getPrecision();
 	
 	public static final int DECIMAL32_SCALE = MathContext.DECIMAL32.getPrecision();
 	
-	private static int DEFAULT_SCALE = DECIMAL128_SCALE;
+	public static int DEFAULT_SCALE = DECIMAL128_SCALE;
 
-	private static final RoundingMode DEFAULT_DIVISION_ROUNDING = RoundingMode.HALF_EVEN;
+	public static RoundingMode DEFAULT_DIVISION_ROUNDING = RoundingMode.HALF_EVEN;
 
 	public static int getDefaultScaleForNewFormulas() {
 		return DEFAULT_SCALE;
@@ -37,29 +37,64 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 		DEFAULT_SCALE = scale;
 	}
 	
-	// normals 
+	public static RoundingMode getDefaultDivisionRoundingForNewFormulas() {
+		return DEFAULT_DIVISION_ROUNDING;
+	}
+	
+	public static void gsetDefaultDivisionRoundingForNewFormulas(RoundingMode roundingMode) {
+		DEFAULT_DIVISION_ROUNDING = roundingMode;
+	}
+	
+	// object attributes 
 	private Calculation<?> calculation;
 
 	private int scale = DEFAULT_SCALE;
 
 	private RoundingMode divisionRounding = DEFAULT_DIVISION_ROUNDING;
 	
+	// constructors
 	public Formula() {
-		this.calculation = new Value(BigDecimal.ZERO);
+		this(new Value(BigDecimal.ZERO), DEFAULT_SCALE, DEFAULT_DIVISION_ROUNDING);
+	}
+	
+	public Formula(int scale, RoundingMode divisionRounding) {
+		this(new Value(BigDecimal.ZERO), scale, divisionRounding);
 	}
 
 	public Formula(String var) {
-		this.calculation = new VariableReplace(var);
+		this(var, DEFAULT_SCALE, DEFAULT_DIVISION_ROUNDING);
 	}
 
 	public Formula(Number value) {
-		this.calculation = new Value(value);
+		this(value, DEFAULT_SCALE, DEFAULT_DIVISION_ROUNDING);
 	}
 
 	public Formula(Calculation<?> calculation) {
-		this.calculation = calculation;
+		this(calculation, DEFAULT_SCALE, DEFAULT_DIVISION_ROUNDING);
+	}
+	
+	public Formula(String var, int scale, RoundingMode divisionRounding) {
+		this.calculation = new VariableReplace(var);
+		initScaleAndRounding(scale, divisionRounding);
 	}
 
+	public Formula(Number value, int scale, RoundingMode divisionRounding) {
+		this.calculation = new Value(value);
+		initScaleAndRounding(scale, divisionRounding);
+	}
+
+	public Formula(Calculation<?> calculation, int scale, RoundingMode divisionRounding) {
+		this.calculation = calculation;
+		initScaleAndRounding(scale, divisionRounding);
+	}
+	
+	// private methods
+	private void initScaleAndRounding(int scale, RoundingMode divisionRounding) { 
+		this.scale = scale;
+		this.divisionRounding = divisionRounding;
+	}
+	
+	//public methods
 	public Formula withDivisionRounding(RoundingMode rounding) {
 		this.divisionRounding = rounding;
 		return this;
@@ -69,7 +104,15 @@ public class Formula extends AbstractCalculation<Formula> implements Aritmethics
 		this.scale = scale;
 		return this;
 	}
+	
+	public RoundingMode getDivisionRounding() {
+		return divisionRounding;
+	}
 
+	public int getScale() {
+		return scale;
+	}
+	
 	public BigDecimal calculate(VarDef... vars) {
 		BigDecimal number = calculation.calculate(vars);
 
